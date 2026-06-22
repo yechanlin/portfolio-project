@@ -1,97 +1,289 @@
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
 p, h1, h2, h3, h4, h5, h6, button {
-    font-family: "Roboto", serif;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
 }
 
 body {
     background-color: #f5f5f9;
-    background-size: cover;
-    width: auto; 
+    font-family: "Roboto", sans-serif;
+    margin: 0;
     overflow-x: hidden;
-    font-family: "Roboto", serif;
-    margin: 0px;
+    color: #222;
 }
 
+a { text-decoration: none; color: inherit; }
+
+/* ── Nav bar ──────────────────────────────────────────────── */
 .nav-bar {
     width: 100%;
-    display: inline-block;
     background-color: #1C539F;
-    font-family: "Roboto", serif;
-    font-weight: 700 !important;
-    padding-top: 10px;
+    padding: 0 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
 }
 
-.nav-content .logo-touch-target {
-    display: inline-flex;
-    height: 60%;
-    width: 350px;
-}
-
-.nav-content .nav-logo {
-    height: 60px;
-    margin: auto;
-}
-
-.nav-logo {
+.nav-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 70px;
 }
 
-.nav-logo img {
-    width: 200px;
-}
+.nav-logo img { width: 160px; display: block; }
 
 .nav-content nav {
-    display: block;
-    width: 100%;
-    text-align: right;
-    padding-top: 0px;
-    padding-right: 0px;
+    display: flex;
+    gap: 8px;
 }
 
+.nav-link {
+    color: rgba(255,255,255,.85);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: background .2s, color .2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: rgba(255,255,255,.18);
+    color: #fff;
+}
+
+/* ── Profile hero ─────────────────────────────────────────── */
 .profile {
-    background-color: #1d539f !important;
+    background: linear-gradient(135deg, #1C539F 0%, #3a7bd5 100%);
     text-align: center;
-    height: 320px;
-    margin-bottom: 50px;
+    padding: 48px 20px 56px;
+}
+
+.profile-picture {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(255,255,255,.4);
+    box-shadow: 0 4px 20px rgba(0,0,0,.25);
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile h1 {
-        font-size: 50px;
-        font-weight: 700;
-        color: white;
-}
-
-.profile img {
-        border-radius: 50%;
-        max-width: 100%;
-        max-height: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;        
-        padding: 20px;
-}
-
-.profile .profile-picture {
-    margin-bottom: 30px;
-    height: 200px;
-}
-
-.banner {
-    padding: 20px 0px 50px 0px;
-    height: 150px;
-    background-color: #1d539f;
-}
-
-.banner .logo {
-    max-width:180px;
-    max-height:60px;
-    width: auto;
-    height: auto;
-}
-
-.banner .title {
-    color: white;
-    font-size: 50px;
+    font-size: 42px;
     font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.profile-tagline {
+    font-size: 18px;
+    color: rgba(255,255,255,.8);
+    font-weight: 300;
+}
+
+/* ── Page hero (non-index pages) ──────────────────────────── */
+.page-hero {
+    background: linear-gradient(135deg, #1C539F 0%, #3a7bd5 100%);
+    text-align: center;
+    padding: 48px 20px;
+    color: #fff;
+}
+
+.page-hero h1 {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.page-hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,.8);
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section {
+    padding: 60px 20px;
+}
+
+.section-alt {
+    background-color: #eef1f8;
+}
+
+.section-inner {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1C539F;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #1C539F;
+}
+
+/* ── About ────────────────────────────────────────────────── */
+.about-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 12px;
+}
+
+/* ── Cards (experience & education) ──────────────────────── */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1C539F;
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+}
+
+.card-date {
+    font-size: 13px;
+    color: #888;
+    white-space: nowrap;
+    margin-top: 2px;
+}
+
+.card-body {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* ── Travel map ───────────────────────────────────────────── */
+#travel-map {
+    width: 100%;
+    height: 380px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    margin-bottom: 20px;
+}
+
+.location-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.location-list li {
+    background: #fff;
+    border: 1px solid #d0d8ec;
+    color: #1C539F;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* ── Hobbies grid ─────────────────────────────────────────── */
+.hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.hobby-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    transition: transform .2s, box-shadow .2s;
+}
+
+.hobby-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+.hobby-img-wrap {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #d0d8ec;
+}
+
+.hobby-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+
+.hobby-card:hover .hobby-img-wrap img {
+    transform: scale(1.05);
+}
+
+.hobby-info {
+    padding: 20px;
+}
+
+.hobby-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1C539F;
+    margin-bottom: 8px;
+}
+
+.hobby-info p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.site-footer {
+    background: #1C539F;
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
 }
