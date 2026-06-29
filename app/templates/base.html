@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="icon" href="/static/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <!-- Leaflet (travel map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="nav-logo"><img src="/static/img/logo.svg" alt="Logo"></a>
+            <nav>
+                {% for page in pages %}
+                <a href="{{ page.url }}" class="nav-link" data-section="{{ page.url.split('#')[1] if '#' in page.url else '' }}">{{ page.name }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-socials">
+            {% for social in socials %}
+            <a href="{{ social.url }}" target="_blank" rel="noopener">{{ social.name }}</a>
+            {% endfor %}
+        </div>
+        <p>&copy; {{ profile.name }} &middot; Built with Flask for the MLH Fellowship</p>
+    </footer>
+
+    <!-- Scroll-spy: highlight the nav button for the section in view -->
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link[data-section]');
+        const sections = [...navLinks]
+            .map(link => document.getElementById(link.dataset.section))
+            .filter(Boolean);
+
+        if (sections.length) {
+            const spy = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link =>
+                            link.classList.toggle('active', link.dataset.section === id));
+                    }
+                });
+            }, { rootMargin: '-45% 0px -50% 0px' });
+            sections.forEach(section => spy.observe(section));
+        }
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
