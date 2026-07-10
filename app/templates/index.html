@@ -1,97 +1,137 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Hero / Profile -->
-<div class="profile">
-    <div class="profile-picture">
+<!-- Hero -->
+<header class="hero">
+    <div class="hero-avatar" data-reveal>
         <img src="/static/img/profile.jpg" alt="Profile photo" onerror="this.src='/static/img/logo.jpg'">
     </div>
-    <h1>{{ profile.name }}</h1>
-    <p class="profile-tagline">{{ profile.tagline }}</p>
+    <p class="hero-eyebrow" data-reveal>Portfolio</p>
+    <h1 data-reveal>{{ profile.name }}</h1>
+    <p class="hero-tagline" data-reveal>{{ profile.tagline }}</p>
+    <div class="hero-cta" data-reveal>
+        <a href="#projects" class="btn btn-primary">View Work</a>
+        {% for social in socials %}
+        <a href="{{ social.url }}" class="btn" target="_blank" rel="noopener">{{ social.name }}</a>
+        {% endfor %}
+    </div>
+    <a href="#about" class="scroll-hint" aria-label="Scroll down">&#8595;</a>
+</header>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stat glass" data-reveal>
+        <div class="stat-num gradient-text"><span data-count="2" data-suffix="&times;">0&times;</span></div>
+        <div class="stat-label">SWE Internships</div>
+    </div>
+    <div class="stat glass" data-reveal>
+        <div class="stat-num gradient-text"><span data-count="2">0</span></div>
+        <div class="stat-label">Hackathon Wins</div>
+    </div>
+    <div class="stat glass" data-reveal>
+        <div class="stat-num gradient-text"><span data-count="1" data-suffix="st">0</span></div>
+        <div class="stat-label">Place · Robotics</div>
+    </div>
+    <div class="stat glass" data-reveal>
+        <div class="stat-num gradient-text"><span data-count="8">0</span></div>
+        <div class="stat-label">Countries Visited</div>
+    </div>
 </div>
 
 <!-- About -->
 <section class="section" id="about">
     <div class="section-inner">
-        <h2 class="section-title">About Me!</h2>
-        <div class="about-grid">
-            <div class="about-text">
-                {% for paragraph in profile.about %}
-                <p>{{ paragraph }}</p>
-                {% endfor %}
-            </div>
+        <h2 class="section-title" data-reveal><span class="gradient-text">About Me</span></h2>
+        <div class="about-text glass" data-reveal>
+            {% for paragraph in profile.about %}
+            <p>{{ paragraph }}</p>
+            {% endfor %}
         </div>
     </div>
 </section>
 
 <!-- Work Experience -->
-<section class="section section-alt" id="experience">
+<section class="section" id="experience">
     <div class="section-inner">
-        <h2 class="section-title">Work Experience</h2>
-        {% for exp in experiences %}
-        <div class="card experience-card">
-            <div class="card-header">
-                <div>
-                    <h3 class="card-title">{{ exp.role }}</h3>
-                    <span class="card-subtitle">{{ exp.company }}</span>
+        <h2 class="section-title" data-reveal><span class="gradient-text">Work Experience</span></h2>
+        <div class="timeline">
+            {% for exp in experiences %}
+            <div class="tl-item" data-reveal>
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">{{ exp.role }}</h3>
+                            <span class="card-subtitle">{{ exp.company }}</span>
+                        </div>
+                        <span class="card-date">{{ exp.start }} &ndash; {{ exp.end }}</span>
+                    </div>
+                    <p class="card-body">{{ exp.description }}</p>
                 </div>
-                <span class="card-date">{{ exp.start }} &ndash; {{ exp.end }}</span>
             </div>
-            <p class="card-body">{{ exp.description }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </section>
 
 <!-- Education -->
 <section class="section" id="education">
     <div class="section-inner">
-        <h2 class="section-title">Education</h2>
-        {% for edu in education %}
-        <div class="card education-card">
-            <div class="card-header">
-                <div>
-                    <h3 class="card-title">{{ edu.school }}</h3>
-                    <span class="card-subtitle">{{ edu.degree }}</span>
+        <h2 class="section-title" data-reveal><span class="gradient-text">Education</span></h2>
+        <div class="timeline">
+            {% for edu in education %}
+            <div class="tl-item" data-reveal>
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">{{ edu.school }}</h3>
+                            <span class="card-subtitle">{{ edu.degree }}</span>
+                        </div>
+                        <span class="card-date">{{ edu.start }} &ndash; {{ edu.end }}</span>
+                    </div>
+                    <p class="card-body">{{ edu.description }}</p>
                 </div>
-                <span class="card-date">{{ edu.start }} &ndash; {{ edu.end }}</span>
             </div>
-            <p class="card-body">{{ edu.description }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </section>
 
 <!-- Projects -->
-<section class="section section-alt" id="projects">
+<section class="section" id="projects">
     <div class="section-inner">
-        <h2 class="section-title">Projects</h2>
-        {% for project in projects %}
-        <div class="card project-card">
-            <div class="card-header">
-                <div>
-                    <h3 class="card-title">
-                        {% if project.url %}<a href="{{ project.url }}" target="_blank" rel="noopener">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}
-                    </h3>
-                    <span class="card-subtitle">{{ project.tech }}</span>
+        <h2 class="section-title" data-reveal><span class="gradient-text">Projects</span></h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="card project-card glass" data-reveal>
+                {% if project.award %}<span class="project-award">&#9733; {{ project.award }}</span>{% endif %}
+                <h3 class="card-title">
+                    {% if project.url %}<a href="{{ project.url }}" target="_blank" rel="noopener">{{ project.name }} &#8599;</a>{% else %}{{ project.name }}{% endif %}
+                </h3>
+                <p class="card-body">{{ project.description }}</p>
+                <div class="chips">
+                    {% for tech in project.tech.split(',') %}
+                    <span class="chip">{{ tech.strip() }}</span>
+                    {% endfor %}
                 </div>
-                {% if project.award %}<span class="project-award">{{ project.award }}</span>{% endif %}
             </div>
-            <p class="card-body">{{ project.description }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </section>
 
 <!-- Skills -->
 <section class="section" id="skills">
     <div class="section-inner">
-        <h2 class="section-title">Technical Skills</h2>
+        <h2 class="section-title" data-reveal><span class="gradient-text">Technical Skills</span></h2>
         <div class="skills-grid">
             {% for skill in skills %}
-            <div class="skill-group">
+            <div class="skill-group glass" data-reveal>
                 <h3 class="skill-category">{{ skill.category }}</h3>
-                <p class="skill-items">{{ skill['items'] }}</p>
+                <div class="chips">
+                    {% for item in skill['items'].split(',') %}
+                    <span class="chip">{{ item.strip() }}</span>
+                    {% endfor %}
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -99,12 +139,12 @@
 </section>
 
 <!-- Hobbies -->
-<section class="section section-alt" id="hobbies">
+<section class="section" id="hobbies">
     <div class="section-inner">
-        <h2 class="section-title">Hobbies</h2>
+        <h2 class="section-title" data-reveal><span class="gradient-text">Hobbies</span></h2>
         <div class="hobbies-grid">
             {% for hobby in hobbies %}
-            <div class="hobby-card">
+            <div class="hobby-card glass" data-reveal>
                 <div class="hobby-img-wrap">
                     <img src="/static/img/{{ hobby.image }}" alt="{{ hobby.name }}"
                         onerror="this.src='/static/img/logo.jpg'">
@@ -122,11 +162,12 @@
 <!-- Travel Map -->
 <section class="section" id="travel">
     <div class="section-inner">
-        <h2 class="section-title">Places I've Visited</h2>
-        <div id="travel-map"></div>
-        <ul class="location-list">
+        <h2 class="section-title" data-reveal><span class="gradient-text">Places I've Visited</span></h2>
+        <p class="travel-meta" data-reveal>&#127757; {{ visited_locations|length }} countries &middot; Asia &amp; Europe &middot; <span class="travel-hint">tap a country to fly there</span></p>
+        <div id="travel-map" data-reveal></div>
+        <ul class="location-list" data-reveal>
             {% for loc in visited_locations %}
-            <li>{{ loc.name }}</li>
+            <li data-idx="{{ loop.index0 }}">{{ loc.name }}</li>
             {% endfor %}
         </ul>
     </div>
@@ -135,16 +176,67 @@
 
 {% block scripts %}
 <script>
-    const map = L.map('travel-map').setView([20, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+    const reduceMotionMap = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const map = L.map('travel-map', { scrollWheelZoom: false, zoomControl: true }).setView([30, 70], 2);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19
     }).addTo(map);
 
+    const accentIcon = L.divIcon({
+        className: 'travel-pin',
+        html: '<span class="pin"></span>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+    });
+
     const locations = {{ visited_locations | tojson }};
-    locations.forEach(loc => {
-        L.marker([loc.lat, loc.lng])
+
+    // Draw a curved "flight path" between consecutive destinations
+    function arcPoints(a, b, seg = 24) {
+        const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        const dist = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        const lift = Math.min(dist * 0.35, 22);          // curve height, capped
+        const ctrl = [mid[0] + lift, mid[1]];            // bow the arc upward (north)
+        const pts = [];
+        for (let t = 0; t <= 1; t += 1 / seg) {
+            const lat = (1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * ctrl[0] + t * t * b[0];
+            const lng = (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * ctrl[1] + t * t * b[1];
+            pts.push([lat, lng]);
+        }
+        return pts;
+    }
+
+    for (let i = 0; i < locations.length - 1; i++) {
+        const a = [locations[i].lat, locations[i].lng];
+        const b = [locations[i + 1].lat, locations[i + 1].lng];
+        L.polyline(arcPoints(a, b), {
+            className: 'travel-arc',
+            color: '#7c3aed', weight: 2, opacity: 0.55, dashArray: '4 8'
+        }).addTo(map);
+    }
+
+    // Markers, keyed by index so the chips can control them
+    const markers = locations.map(loc =>
+        L.marker([loc.lat, loc.lng], { icon: accentIcon })
             .addTo(map)
-            .bindPopup(`<strong>${loc.name}</strong>`);
+            .bindPopup(`<strong>${loc.name}</strong>`));
+
+    // Frame the map to the actual destinations
+    const bounds = L.latLngBounds(locations.map(l => [l.lat, l.lng]));
+    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 4 });
+
+    // Chips control the map
+    const chips = document.querySelectorAll('.location-list li[data-idx]');
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const m = markers[+chip.dataset.idx];
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            map.flyTo(m.getLatLng(), 4, { duration: reduceMotionMap ? 0 : 1 });
+            m.openPopup();
+        });
     });
 </script>
 {% endblock %}

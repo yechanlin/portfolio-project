@@ -2,15 +2,15 @@
 
 {% block content %}
 <div class="page-hero">
-    <h1>My Hobbies</h1>
-    <p>Things I love doing outside of work</p>
+    <h1 data-reveal><span class="gradient-text">My Hobbies</span></h1>
+    <p data-reveal>Things I love doing outside of work</p>
 </div>
 
 <section class="section" id="hobbies">
     <div class="section-inner">
         <div class="hobbies-grid">
             {% for hobby in hobbies %}
-            <div class="hobby-card">
+            <div class="hobby-card glass" data-reveal>
                 <div class="hobby-img-wrap">
                     <img src="/static/img/{{ hobby.image }}" alt="{{ hobby.name }}"
                         onerror="this.src='/static/img/logo.jpg'">

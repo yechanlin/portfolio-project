@@ -154,6 +154,7 @@ pages = [
     {"name": "Skills", "url": "/#skills"},
     {"name": "Hobbies", "url": "/#hobbies"},
     {"name": "Travel", "url": "/#travel"},
+    {"name": "Timeline", "url": "/timeline"},
 ]
 
 
@@ -184,6 +185,16 @@ def hobbies_page():
         profile=profile,
         socials=socials,
         hobbies=hobbies,
+        pages=pages,
+    )
+
+@app.route("/timeline")
+def timeline():
+    return render_template(
+        "timeline.html",
+        title="Timeline",
+        profile=profile,
+        socials=socials,
         pages=pages,
     )
 
