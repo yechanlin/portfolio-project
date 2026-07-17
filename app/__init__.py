@@ -1,6 +1,6 @@
 import os
 import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 from peewee import *
 from playhouse.shortcuts import model_to_dict
@@ -9,12 +9,15 @@ from playhouse.shortcuts import model_to_dict
 load_dotenv()
 app = Flask(__name__)
 
-mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST"),
-    port=3306
-)
+if os.getenv("TESTING") == "true":
+    mydb = SqliteDatabase(":memory:")
+else:
+    mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306
+    )
 
 print(mydb)
 
@@ -200,12 +203,16 @@ def timeline():
 
 @app.route('/api/timeline_post', methods=['POST'])
 def post_time_line_post():
-    name = request.form['name']
-    email = request.form['email']
-    content = request.form['content']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    content = request.form.get('content')
+
+    if not name or not email or not content:
+        return jsonify({'error': 'name, email, and content are required'}), 400
+
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
 
-    return model_to_dict(timeline_post)
+    return jsonify(model_to_dict(timeline_post)), 201
 
 @app.route('/api/timeline_post', methods=['GET'])
 def get_time_line_post():
@@ -218,5 +225,8 @@ def get_time_line_post():
 
 @app.route('/api/timeline_post/<int:post_id>', methods=['DELETE'])
 def delete_time_line_post(post_id):
+    if TimelinePost.get_or_none(TimelinePost.id == post_id) is None:
+        return jsonify({'error': f'timeline post {post_id} not found'}), 404
+
     TimelinePost.delete().where(TimelinePost.id == post_id).execute()
     return {'deleted': post_id}
