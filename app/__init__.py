@@ -54,7 +54,7 @@ if not IS_TESTING:
 
 profile = {
     "name": "Ye Chan Lin",
-    "tagline": "Software Engineer & CS Student at UCLA",
+    "tagline": "Software Engineer & CS Student at UCLA | MLH Production Engineering Fellow",
     "about": [
         "I'm a CS student at UCLA with hands-on experience building production "
         "systems — from geospatial ETL pipelines on AWS to full-stack web "
