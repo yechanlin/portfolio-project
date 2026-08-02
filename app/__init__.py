@@ -9,7 +9,9 @@ from playhouse.shortcuts import model_to_dict
 load_dotenv()
 app = Flask(__name__)
 
-if os.getenv("TESTING") == "true":
+IS_TESTING = os.getenv("TESTING") == "true"
+
+if IS_TESTING:
     mydb = SqliteDatabase(":memory:")
 else:
     mydb = MySQLDatabase(os.getenv("MYSQL_DATABASE"),
@@ -32,6 +34,23 @@ class TimelinePost(Model):
 
 mydb.connect()
 mydb.create_tables([TimelinePost])
+
+# MySQL closes idle connections, so the single connection opened above goes
+# stale and every later request fails with InterfaceError. Open and close a
+# connection per request instead. The in-memory SQLite database used by the
+# tests is skipped — closing it would throw away the schema and rows.
+if not IS_TESTING:
+    mydb.close()
+
+    @app.before_request
+    def open_db_connection():
+        if mydb.is_closed():
+            mydb.connect()
+
+    @app.teardown_request
+    def close_db_connection(exception):
+        if not mydb.is_closed():
+            mydb.close()
 
 profile = {
     "name": "Ye Chan Lin",
