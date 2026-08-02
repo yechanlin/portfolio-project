@@ -191,7 +191,7 @@
         iconAnchor: [8, 8]
     });
 
-    const locations = {{ visited_locations | tojson }};
+    const locations = JSON.parse('{{ visited_locations | tojson | safe }}');
 
     // Draw a curved "flight path" between consecutive destinations
     function arcPoints(a, b, seg = 24) {
