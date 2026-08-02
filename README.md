@@ -72,6 +72,33 @@ You'll now be able to access the website at `localhost:5000` or `127.0.0.1:5000`
 
 *Note: The portfolio site will only work on your local machine while you have it running inside of your terminal. We'll go through how to host it in the cloud in the next few weeks!* 
 
+## Running the tests
+
+```bash
+$ ./run_test.sh
+```
+
+## Docker
+
+Local development (Flask on port 5050, MariaDB alongside it):
+```bash
+$ docker compose -f docker-compose.yaml up --build
+```
+
+Production (adds the nginx-certbot reverse proxy using the vhost in `user_conf.d/`):
+```bash
+$ docker compose -f docker-compose.prod.yaml up -d --build
+```
+
+`redeploy-site.sh` lives in `/root` on the VPS and is kept here for version tracking. It
+pulls the latest `main` and rebuilds the production stack.
+
+## Extra scripts
+
+- `curl-test.sh` — a manual smoke test for the `/api/timeline_post` endpoint. It POSTs a
+  random post, GETs the list to confirm the post shows up, then DELETEs it to clean up.
+  Useful for checking a running server (local or the VPS) outside of the unit tests.
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
